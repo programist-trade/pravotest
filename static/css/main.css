@@ -1,0 +1,81 @@
+body {
+    background-color: #b8b7c6;
+    color: black;
+}
+
+.center {
+    text-align: center;
+}
+#nav {
+    margin: 20px 0;
+    padding-top: 5px;
+    background-color: #9e9bc4;
+}
+#nav:hover {
+    background-color: #6f6aaf;
+}
+#nav a {
+    text-decoration: none;
+    color: black;
+}
+
+#selection {
+    margin-top: 20px;
+    
+}
+#selection select {
+    color: white;
+    border: none;
+    background-color: #6c757d;
+}
+
+.resp {
+    margin-top: 40px;
+    color: black;
+    font-size: large;
+}
+.resp a {
+    color: black;
+}
+
+.answer {
+    color: black;
+    background-color: #6d6c6c4c;
+    
+    margin-top: 20px;
+}
+.answer label {
+    padding: 5px 0;
+}
+.answer label:hover {
+    cursor: pointer;
+}
+.answer input {
+    opacity: 0;
+}
+.answer input:hover {
+    opacity: 0;
+    cursor: pointer;
+}
+
+.nexttest {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+#bookdiv {
+    margin-left: 20px;
+    
+}
+
+#Book3d{
+    
+    
+   
+}
+
+.marg {
+    margin-top: 10px;
+}
+

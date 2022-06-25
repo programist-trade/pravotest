@@ -1,0 +1,41 @@
+<script>
+    function GetAnswer(ans) {
+        var answer = $(ans).attr('value');
+        var answerid = $(ans).attr('id');
+        var divid = answerid + ' + 1';
+        var divf = document.getElementById(divid);
+        var label = document.querySelector(`[for="${ans.id}"]`);
+        var elemt = document.getElementById("True");
+        if (answer == 'False') {
+            console.log(divf);
+            divf.style.backgroundColor = '#ff38387b';
+            elemt.style.backgroundColor = '#52ff3373';
+        }
+        else {
+            elemt.style.backgroundColor = '#52ff3373';
+        }
+        console.log(answer);
+    }
+</script>
+
+<div class="resp">
+    <h5>{{question.question_text}}</h5>
+    
+    {% for text, bool in choices.items %}
+    {% if bool == True %}
+        <div class="form-check answer" id="{{bool}}">
+            <input onclick="GetAnswer(this)" class="form-check-input" type="radio" value="{{bool}}" id="correct" >
+            <label class="form-check-label" for="correct">{{text}}</label>
+        </div>
+    {% else %}
+        <div class="form-check answer" id="{{bool}} + {{text}} + 1">
+            <input onclick="GetAnswer(this)" class="form-check-input" type="radio" value="{{bool}}" id="{{bool}} + {{text}}">
+            <label class="form-check-label" for="{{bool}} + {{text}}">{{text}}</label>
+        </div>
+    {% endif %}
+    {% endfor %}
+    
+    <div class="nexttest" >
+        <button onclick="GetTest()" type="button" class="btn btn-outline-secondary" >Наступний тест</button>
+    </div>
+</div>

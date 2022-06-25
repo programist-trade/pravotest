@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+    {% load static %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Підготовка до МКТ Право Тести #ЄФВВ 2022</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function GetTest() {
+            var select = document.getElementById('subject_id');
+            var index = select.selectedIndex;
+            var given_id = select.options[index].value;
+            var this_url = window.location.pathname;
+            var post_url = this_url + given_id;
+            if ($(given_id) != 0) {                                
+                $.ajax({
+                    url: post_url,
+                    type: 'POST',
+                    data: {
+                        subjectid: given_id,
+                    },
+                    success: function (json){
+                        $(".resp").replaceWith(json.html);
+                    },
+                    error: function (xhr) {
+                        alert("Оберіть предмет зі списку та починайте підготовку!");
+                    }
+                });
+            }
+        }
+    </script>
+    <script src="{% static 'js/three.js' %}"></script>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 center" id="nav">
+                <a href="/"><h5>БЕЗКОШТОВНІ ТЕСТИ "Право"<br>підготовка
+                    до МКТ 2022 </h5></a>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4 center" id="nav">
+                <a href="{% url 'info' %}"><h5>ВАЖЛИВА ІНФОРМАЦІЯ про 
+                    <br>вступ до магістратури дати МКТ 2022</h5></a>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 " >
+                <div class="bookdiv" id="bookdiv">
+
+                </div>
+                <div class="buy center marg">
+                    <a href="https://pravo-izdat.com.ua/zno/pravo-ta-tznpk-testovi-zavdannya-u-formati-yefvv.-navchalnij-posibnik"><button type="button" class="btn btn-secondary btn-lg">Замовити</button></a>
+                </div>
+                <div class="center marg">
+                    <p>
+                        <b>Навчальний посібник для підготовки до МКТ "Право"</b>. Укладено відповідно до чинної програми МОН від 03 лютого 2022 року № 107.
+                        <br><b>Вміст видання: Право - 95%</b>; ТЗНПК - 5%
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-7" id="selection">
+        
+                <select class="form-select form-select-lg mb-3" id="subject_id" onchange="GetTest()">
+                <option selected>Оберіть предмет зі списку</option>
+                    {% for name in law %}
+                    <option value="{{name.id}}">{{name}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="resp">
+                    <h5 class="center">Інструкція для вступу на магістратуру 
+                        <br> за спеціальністю "Право" та "Міжнародне право"</h5>
+                    <p>
+                        1. Ознайомся з <a href="{% url 'info' %}">важливою інформацією про вступ у 2022 році</a>, датами реєстрації та проведення Магістерського Комплексного Тесту, Програмою МОН та структурою блоків тесту. 
+                    </p>
+                    <p>
+                        2. <b>Готуйся за <a href="https://pravo-izdat.com.ua/zno/pravo-ta-tznpk-testovi-zavdannya-u-formati-yefvv.-navchalnij-posibnik">матеріалами укладеними відповідно до Програми</a> МОН від 03 лютого 2022 року</b>. 
+                    </p>
+                    <p>
+                        3. <b>Вирішуй 1000 БЕЗКОШТОВНИХ тестів з Права у форматі МКТ 2022 онлайн на цій сторінці</b>.
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(45,300/400,0.1,1000);
+        camera.position.z = 50;
+        camera.position.y = 18;
+
+
+        bookdiv = document.createElement('div');
+        
+        document.getElementById('bookdiv').appendChild( bookdiv );
+
+        renderer = new THREE.WebGLRenderer({alpha:true, antialias:true});
+        renderer.setSize(355,420);
+        renderer.domElement.setAttribute("id", "Book3d");
+        bookdiv.appendChild( renderer.domElement );
+
+        hlight = new THREE.AmbientLight (0x404040,5.3);
+        scene.add(hlight);
+
+        let loader = new THREE.GLTFLoader();
+        let book = null;
+        loader.load('{% static "img/book_fin.gltf" %}', function(gltf){
+            book = gltf;
+            book.scene.scale.set(1.4,1.4,1.4);
+
+            scene.add(book.scene);
+            
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if(book)
+                book.scene.rotation.y += 0.007;
+
+            renderer.render(scene,camera);
+        }
+        animate()
+
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>
